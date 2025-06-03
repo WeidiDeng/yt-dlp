@@ -1054,6 +1054,8 @@ class InfoExtractor:
             filename = _request_dump_filename(
                 urlh.url, video_id, data,
                 trim_length=self.get_param('trim_file_name'))
+            if self.get_param('write_pages_dir'):
+                filename = os.path.join(self.get_param('write_pages_dir'), filename)
             self.to_screen(f'Saving request to {filename}')
             with open(filename, 'wb') as outf:
                 outf.write(webpage_bytes)

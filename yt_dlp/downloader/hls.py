@@ -2,6 +2,7 @@ import binascii
 import io
 import re
 import urllib.parse
+import os
 
 from . import get_suitable_downloader
 from .external import FFmpegFD
@@ -86,6 +87,8 @@ class HlsFD(FragmentFD):
                 dump_filename = _request_dump_filename(
                     man_url, info_dict['id'], None,
                     trim_length=self.params.get('trim_file_name'))
+                if self.params.get('write_pages_dir'):
+                    dump_filename = os.path.join(self.params.get('write_pages_dir'), dump_filename)
                 self.to_screen(f'[{self.FD_NAME}] Saving request to {dump_filename}')
                 with open(dump_filename, 'wb') as outf:
                     outf.write(s_bytes)
